@@ -1,8 +1,8 @@
-class Queen < Piece
+class NullPiece < Piece
   attr_reader :value
 
   def initialize(color)
-    @value = "Q"
+    @value = "-"
     super(color)
   end
 end
