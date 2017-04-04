@@ -72,21 +72,21 @@ class Cursor
     STDIN.echo = true # the console prints return values again
     STDIN.cooked! # the opposite of raw mode :)
 
-    return input
+    input
   end
 
   def handle_key(key)
     case key
     when :return || :space
-      return @cursor_pos
+      @cursor_pos
     when :left
-      return update_pos(MOVES[:left])
+      update_pos(MOVES[:left])
     when :right
-      return update_pos(MOVES[:right])
+      update_pos(MOVES[:right])
     when :up
-      return update_pos(MOVES[:up])
+      update_pos(MOVES[:up])
     when :down
-      return update_pos(MOVES[:down])
+      update_pos(MOVES[:down])
     when :ctrl_c
       Process.exit(0)
     end
@@ -96,7 +96,7 @@ class Cursor
   def update_pos(diff)
     new_pos = [@cursor_pos[0] + diff[0], @cursor_pos[1] + diff[1]]
     @cursor_pos = new_pos if in_bounds?(new_pos)
-
+    nil
   end
 
   def in_bounds?(pos)

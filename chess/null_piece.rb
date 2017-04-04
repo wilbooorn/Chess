@@ -4,7 +4,7 @@ class NullPiece < Piece
   include Singleton
 
   def initialize
-    @value = "-"
+    @value = " "
     super(nil, [nil, nil], nil)
   end
 

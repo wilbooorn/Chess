@@ -10,8 +10,12 @@ class Piece
     p @board[@pos] == self
   end
 
+  def other_color
+    @color == :w ? :b : :w
+  end
+
   # def moves
   # end
 
-  
+
 end
