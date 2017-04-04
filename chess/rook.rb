@@ -1,8 +1,15 @@
+require_relative 'sliding_piece'
+
 class Rook < Piece
   attr_reader :value
-  
-  def initialize(color)
+  include SlidingPiece
+
+  def initialize(color, pos, board)
     @value = "R"
-    super(color)
+    super(color, pos, board)
+  end
+
+  def move_dirs
+    [:horizontal]
   end
 end

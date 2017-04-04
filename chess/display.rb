@@ -1,7 +1,9 @@
 require 'colorize'
 require_relative 'cursor'
+require_relative 'board'
 
 class Display
+  attr_reader :cursor
   def initialize(board)
     @board = board
     @cursor = Cursor.new([0, 0], @board)
@@ -25,5 +27,13 @@ class Display
       print "\n"
     end
   end
-
 end
+
+# b = Board.new
+# d = Display.new(b)
+# d.render
+# while true
+#   system("clear")
+#   d.render
+#   d.cursor.get_input
+# end

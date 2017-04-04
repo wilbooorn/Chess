@@ -1,8 +1,12 @@
+require_relative 'stepping_piece'
+
 class Knight < Piece
+  include SteppingPiece
+
   attr_reader :value
 
-  def initialize(color)
+  def initialize(color, pos, board)
     @value = "N"
-    super(color)
+    super(color, pos, board)
   end
 end
