@@ -3,7 +3,11 @@ class Pawn < Piece
 
 
   def initialize(color, pos, board)
-    @value = "P"
+    if color == :b
+      @value = 9823.chr(Encoding::UTF_8)
+    else
+      @value = 9817.chr(Encoding::UTF_8)
+    end
     super(color, pos, board)
     @moved = false
   end

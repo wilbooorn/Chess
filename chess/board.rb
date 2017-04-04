@@ -30,9 +30,16 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
-    raise "empty start" if self[start_pos].is_a?(NullPiece)
-    raise "invalid move" unless self[start_pos].moves.include?(end_pos)
-    raise "can't put yourself in check" if move_into_check?(start_pos, end_pos)
+    raise "Empty start" if self[start_pos].is_a?(NullPiece)
+    raise "Invalid move" unless self[start_pos].moves.include?(end_pos)
+    raise "Can't put yourself in check" if move_into_check?(start_pos, end_pos)
+    temp = self[start_pos]
+    self[start_pos] = NullPiece.instance
+    self[end_pos] = temp
+    self[end_pos].pos = end_pos
+  end
+
+  def move_piece!(start_pos, end_pos)
     temp = self[start_pos]
     self[start_pos] = NullPiece.instance
     self[end_pos] = temp
@@ -42,13 +49,8 @@ class Board
   def move_into_check?(start_pos, end_pos)
     check = false
     piece = self[start_pos]
-    # puts piece.color
-    # sleep(3)
     old_piece = self[end_pos]
-    temp = self[start_pos]
-    self[start_pos] = NullPiece.instance
-    self[end_pos] = temp
-    self[end_pos].pos = end_pos
+    move_piece!(start_pos, end_pos)
     check = true if in_check?(piece.color)
     piece.pos = start_pos
     self[start_pos] = piece
@@ -88,10 +90,7 @@ class Board
         possible_moves.each do |move|
           start_pos = piece.pos
           old_piece = self[move]
-          temp = self[start_pos]
-          self[start_pos] = NullPiece.instance
-          self[move] = temp
-          self[move].pos = move
+          move_piece!(start_pos, move)
 
           unless self.in_check?(color)
             piece.pos = start_pos
@@ -111,6 +110,3 @@ class Board
   end
 
 end
-
-# b = Board.new
-# p b.grid

@@ -23,7 +23,6 @@ class HumanPlayer
     @display.board.move_piece(start_pos, end_pos)
   rescue => e
     puts e
-    puts "Not a valid move"
     sleep(1)
     retry
   end

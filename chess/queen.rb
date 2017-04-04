@@ -5,7 +5,11 @@ class Queen < Piece
   include SlidingPiece
 
   def initialize(color, pos, board)
-    @value = "Q"
+    if color == :b
+      @value = 9819.chr(Encoding::UTF_8)
+    else
+      @value = 9813.chr(Encoding::UTF_8)
+    end
     super(color, pos, board)
   end
 

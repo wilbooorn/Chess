@@ -11,18 +11,19 @@ class Display
 
   def render
 
+
     @board.grid.each_with_index do |row, i|
       print 8-i
       row.each_with_index do |piece, j|
         if (i+j) % 2 == 0
-          background = :white
+          background = :default
         else
-          background = :grey
+          background = :green
         end
         if [i, j] == @cursor.cursor_pos
           print " #{piece.value} ".colorize(:background => :cyan)
         elsif piece.color == :w
-          print " #{piece.value} ".colorize(:color => :red, :background => background)
+          print " #{piece.value} ".colorize(:background => background)
         else
           print " #{piece.value} ".colorize(:background => background)
         end

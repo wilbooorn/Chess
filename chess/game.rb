@@ -15,7 +15,6 @@ class Game
 
   def play
     until @board.checkmate?(:w) || @board.checkmate?(:b)
-      puts "#{@current_player.color}'s turn"
       @current_player.play_turn
       switch_player
     end
@@ -28,9 +27,11 @@ class Game
   end
 
 end
-b = Board.new
-d = Display.new(b)
-p1 = HumanPlayer.new("Robin", d, :w)
-p2 = HumanPlayer.new("Mark", d, :b)
-g = Game.new(p1, p2, b, d)
-g.play
+
+if __FILE__ == $PROGRAM_NAME
+  b = Board.new
+  d = Display.new(b)
+  p1 = HumanPlayer.new("Robin", d, :w)
+  p2 = HumanPlayer.new("Mark", d, :b)
+  Game.new(p1, p2, b, d).play
+end

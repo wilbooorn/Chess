@@ -5,7 +5,11 @@ class King < Piece
   include SteppingPiece
 
   def initialize(color, pos, board)
-    @value = "K"
+    if color == :b
+      @value = 9818.chr(Encoding::UTF_8)
+    else
+      @value = 9812.chr(Encoding::UTF_8)
+    end
     super(color, pos, board)
   end
 end
