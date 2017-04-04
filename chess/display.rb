@@ -29,9 +29,20 @@ class Display
   end
 end
 
-# b = Board.new
-# d = Display.new(b)
-# d.render
+b = Board.new
+d = Display.new(b)
+
+b.move_piece([1,6],[3,6])
+b.move_piece([6,4],[5,4])
+b.move_piece([7,3],[3,7])
+d.render
+b.move_piece([1,5],[2,5])
+
+d.render
+p b.checkmate?(:b)
+p b.checkmate?(:w)
+# p b.checkmate?(:w)
+
 # while true
 #   system("clear")
 #   d.render

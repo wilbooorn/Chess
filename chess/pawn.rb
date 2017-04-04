@@ -12,28 +12,37 @@ class Pawn < Piece
     possible_moves = []
 
     if color == :w
-     possible_moves << [pos[0] - 1, pos[1]]
-     possible_moves << [pos[0] - 2, pos[1]] unless @moved
+      possible_moves << [pos[0] - 1, pos[1]]
+      possible_moves << [pos[0] - 2, pos[1]] unless @moved
     else
       possible_moves << [pos[0] + 1, pos[1]]
       possible_moves << [pos[0] + 2, pos[1]] unless @moved
     end
 
-    possible_moves.select { |move| valid_move?(move) }
+    possible_moves = possible_moves.select { |move| valid_move?(move) }
 
     if color == :w
-     possible_moves << [pos[0] - 1, pos[1]+1] if self.board[[pos[0] - 1, pos[1]+1]].color == :b
-     possible_moves << [pos[0] - 1, pos[1]-1] if self.board[[pos[0] - 1, pos[1]-1]].color == :b
+      x = [pos[0] - 1, pos[1] + 1]
+      y = [pos[0] - 1, pos[1] - 1]
+
+      possible_moves << x if in_bounds?(x) && self.board[x].color == :b
+      possible_moves << y if in_bounds?(y) && self.board[y].color == :b
     else
-      possible_moves << [pos[0] + 1, pos[1]+1] if self.board[[pos[0] + 1, pos[1]+1]].color == :w
-      possible_moves << [pos[0] + 1, pos[1]-1] if self.board[[pos[0] + 1, pos[1]-1]].color == :w
+      x = [pos[0] + 1, pos[1] + 1]
+      y = [pos[0] + 1, pos[1] - 1]
+
+      possible_moves << x if in_bounds?(x) && self.board[x].color == :w
+      possible_moves << y if in_bounds?(y) && self.board[y].color == :w
     end
     possible_moves
   end
 
+  def in_bounds?(move)
+    move[0].between?(0, 7) && move[1].between?(0, 7)
+  end
+
   def valid_move?(move)
-    move[0].between?(0, 7) && move[1].between?(0, 7) &&
-      self.board[move].is_a?(NullPiece)
+    in_bounds?(move) && self.board[move].is_a?(NullPiece)
   end
 
 end

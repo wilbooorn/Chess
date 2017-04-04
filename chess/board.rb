@@ -32,10 +32,26 @@ class Board
   def move_piece(start_pos, end_pos)
     raise "empty start" if self[start_pos].is_a?(NullPiece)
     raise "invalid move" unless self[start_pos].moves.include?(end_pos)
+    raise "can't put yourself in check" if move_into_check?(start_pos, end_pos)
     temp = self[start_pos]
     self[start_pos] = NullPiece.instance
     self[end_pos] = temp
     self[end_pos].pos = end_pos
+  end
+
+  def move_into_check?(start_pos, end_pos)
+    check = false
+    piece = self[start_pos]
+    old_piece = self[end_pos]
+    temp = self[start_pos]
+    self[start_pos] = NullPiece.instance
+    self[end_pos] = temp
+    self[end_pos].pos = end_pos
+    check = true if in_check?(piece.color)
+    piece.pos = start_pos
+    self[start_pos] = piece
+    self[end_pos] = old_piece
+    check
   end
 
   def [](pos)
@@ -48,7 +64,51 @@ class Board
     @grid[row][col] = val
   end
 
+  def in_check?(color)
+    positions = []
+    king_pos = []
+    @grid.each do |row|
+      row.each do |piece|
+        positions += piece.moves if piece.color != color
+        king_pos = piece.pos if piece.is_a?(King) && piece.color == color
+      end
+    end
+    positions.include?(king_pos)
+  end
+
+  def checkmate?(color)
+    return false unless in_check?(color)
+
+    @grid.each do |row|
+      row.each do |piece|
+        possible_moves = []
+        possible_moves += piece.moves if piece.color == color
+        possible_moves.each do |move|
+          start_pos = piece.pos
+          old_piece = self[move]
+          move_piece(start_pos, move)
+
+          unless self.in_check?(color)
+            piece.pos = start_pos
+            self[start_pos] = piece
+            self[move] = old_piece
+            p move
+            p piece.value
+            p piece.to_s
+
+            return false
+          end
+          piece.pos = start_pos
+          self[start_pos] = piece
+          self[move] = old_piece
+
+        end
+      end
+    end
+    true
+  end
+
 end
 
-b = Board.new
-p b.grid
+# b = Board.new
+# p b.grid

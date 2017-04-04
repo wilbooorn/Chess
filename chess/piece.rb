@@ -6,7 +6,12 @@ class Piece
     @color, @pos, @board = color, pos, board
   end
 
-  def move
+  def to_s
+    p @board[@pos] == self
   end
 
+  # def moves
+  # end
+
+  
 end

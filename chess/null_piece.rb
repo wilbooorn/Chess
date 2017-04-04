@@ -7,4 +7,9 @@ class NullPiece < Piece
     @value = "-"
     super(nil, [nil, nil], nil)
   end
+
+  def moves
+    []
+  end
+
 end
